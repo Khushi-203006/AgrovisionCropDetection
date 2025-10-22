@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>CropDetect — Home</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand">
+        <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="logo">
+        <div>
+          <h2 style="margin:0">CropDetect</h2>
+          <div class="small">Early detection, healthier crops</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('detection') }}">Detection</a>
+        <a href="{{ url_for('map_page') }}">Map</a>
+        <a href="{{ url_for('diseases') }}">Diseases</a>
+        <a href="{{ url_for('sdg') }}">SDG Info</a>
+        <a href="{{ url_for('admin') }}">Admin</a>
+      </nav>
+    </header>
+
+    <div class="card row">
+      <div class="col">
+        <h3>Welcome to CropDetect</h3>
+        <p class="small">
+          Upload photos of leaves and get an instant (mock) diagnosis. This prototype includes an admin panel,
+          area map for disease hot-spots, SDG info and a disease knowledge base — ready to connect to your model.
+        </p>
+        <!-- ✅ fixed: use Flask route instead of static HTML file -->
+        <p><a class="btn" href="{{ url_for('detection') }}">Try Detection</a></p>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <h4>How it works</h4>
+          <ol class="small">
+            <li>Login / Sign up</li>
+            <li>Upload leaf image on Detection page</li>
+            <li>Model predicts disease (mock for now)</li>
+            <li>Map aggregates detection points</li>
+            <li>Admin reviews reported cases</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

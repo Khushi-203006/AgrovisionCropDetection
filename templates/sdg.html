@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropDetect — SDG Info</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    .sdg-section {
+      padding: 30px;
+      width: 80%;
+      margin: auto;
+      background: #f0fff4;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h2>🌍 SDG & Agriculture</h2>
+    <nav>
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('detection') }}">Detection</a>
+    </nav>
+  </header>
+
+  <div class="sdg-section">
+    <h3>SDG 2 — Zero Hunger</h3>
+    <p>CropDetect contributes to ensuring sustainable food production and improving resilience to plant diseases.</p>
+
+    <h3>SDG 13 — Climate Action</h3>
+    <p>By monitoring disease patterns, CropDetect supports adaptation strategies for climate-affected regions.</p>
+  </div>
+</body>
+</html>

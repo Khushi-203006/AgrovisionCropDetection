@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropDetect — Diseases Info</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    .disease-card {
+      background: #f1fff0;
+      border-left: 5px solid #4caf50;
+      padding: 15px;
+      margin: 20px auto;
+      border-radius: 8px;
+      width: 80%;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h2>🧠 Plant Diseases Info</h2>
+    <nav>
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('detection') }}">Detection</a>
+    </nav>
+  </header>
+
+  <section>
+    <div class="disease-card">
+      <h3>1. Leaf Blight</h3>
+      <p>Caused by fungi that infect leaves, resulting in brown or black spots. Prevent by crop rotation and fungicides.</p>
+    </div>
+    <div class="disease-card">
+      <h3>2. Powdery Mildew</h3>
+      <p>White powdery spots on leaves due to fungal growth. Avoid by improving air circulation.</p>
+    </div>
+    <div class="disease-card">
+      <h3>3. Rust</h3>
+      <p>Orange or brown pustules appear on leaves. Common in humid environments.</p>
+    </div>
+  </section>
+</body>
+</html>
