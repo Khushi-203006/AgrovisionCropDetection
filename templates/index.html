@@ -5,6 +5,69 @@
   <title>CropDetect — Home</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1e5631, #a4de02);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      animation: fadeInDown 1s ease forwards;
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 20px auto;
+      animation: fadeInUp 1.5s ease forwards;
+    }
+
+    .btn {
+      margin-top: 30px;
+      background: #fff;
+      color: #1e5631;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    .btn:hover {
+      background: #a4de02;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeInDown {
+      from {opacity: 0; transform: translateY(-30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
   <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
 </head>
 <body>
