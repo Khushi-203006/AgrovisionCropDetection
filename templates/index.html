@@ -32,6 +32,13 @@
       margin: 20px auto;
       animation: fadeInUp 1.5s ease forwards;
     }
+    .logo {
+  width: 60px;      /* Adjust as needed */
+  height: 60px;     /* Keep it square for consistency */
+  object-fit: contain;  /* Ensures the image isn’t distorted */
+  margin-right: 10px;   /* Adds a little space next to text */
+  vertical-align: middle; /* Aligns nicely with brand text */
+}
 
     .btn {
       margin-top: 30px;
@@ -74,7 +81,7 @@
   <div class="container">
     <header class="header">
       <div class="brand">
-        <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="logo">
+        <img src="{{ url_for('static', filename='assets/logo.jpg') }}" alt="CropDetect Logo" class="logo">
         <div>
           <h2 style="margin:0">CropDetect</h2>
           <div class="small">Early detection, healthier crops</div>

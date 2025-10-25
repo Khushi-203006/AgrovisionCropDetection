@@ -17,6 +17,7 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#071018 0%, #0f
 .header{
   display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;
 }
+
 .brand{display:flex;gap:12px;align-items:center}
 .brand img{width:46px;height:46px;border-radius:10px;object-fit:cover}
 .nav a{color:var(--muted);text-decoration:none;margin-left:14px}

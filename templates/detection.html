@@ -44,16 +44,82 @@
     </form>
     <div id="result"></div>
   </div>
+<!-- Detection Result Section -->
+<div id="detectionResult" style="display:none; width:80%; margin:auto;">
+  <h3>🧾 Detection Report</h3>
+  <div id="diseaseDetails"></div>
+  <canvas id="analysisChart" width="400" height="200"></canvas>
+  <button id="downloadPdf" class="btn">Download Report as PDF</button>
+</div>
 
-  <script>
-    const form = document.getElementById('uploadForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const res = await fetch('/detection', { method: 'POST', body: formData });
-      const data = await res.json();
-      document.getElementById('result').innerText = data.result || data.error;
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const form = document.getElementById('uploadForm');
+const resultDiv = document.getElementById('result');
+const detailsDiv = document.getElementById('diseaseDetails');
+const detectionResult = document.getElementById('detectionResult');
+const downloadBtn = document.getElementById('downloadPdf');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
+  
+  resultDiv.innerText = "Detecting... please wait ⏳";
+
+  const res = await fetch('/detection', { method: 'POST', body: formData });
+  const data = await res.json();
+
+  if (data.error) {
+    resultDiv.innerText = data.error;
+    return;
+  }
+
+  resultDiv.innerText = "";
+  detectionResult.style.display = 'block';
+
+  // Show textual disease details
+  detailsDiv.innerHTML = `
+    <h4>${data.disease}</h4>
+    <p><b>Causes:</b> ${data.causes}</p>
+    <p><b>Prevention:</b> ${data.prevention}</p>
+    <p><b>Treatment:</b> ${data.treatment}</p>
+    <p><b>Soil Type:</b> ${data.soil}</p>
+    <p><b>Water Requirement:</b> ${data.water}</p>
+    <p><b>Temperature:</b> ${data.temperature}</p>
+  `;
+
+  // Chart for analysis
+  const ctx = document.getElementById('analysisChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Soil', 'Water', 'Temperature'],
+      datasets: [{
+        label: 'Crop Health Analysis',
+        data: [data.soil_score, data.water_score, data.temp_score],
+        backgroundColor: ['#81c784', '#4db6ac', '#64b5f6']
+      }]
+    },
+    options: { scales: { y: { beginAtZero: true, max: 100 } } }
+  });
+
+  // PDF Download
+  downloadBtn.onclick = () => {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF();
+    pdf.text(`Crop Disease Detection Report`, 10, 10);
+    pdf.text(`Disease: ${data.disease}`, 10, 20);
+    pdf.text(`Causes: ${data.causes}`, 10, 30);
+    pdf.text(`Prevention: ${data.prevention}`, 10, 40);
+    pdf.text(`Treatment: ${data.treatment}`, 10, 50);
+    pdf.text(`Soil: ${data.soil}`, 10, 60);
+    pdf.text(`Water: ${data.water}`, 10, 70);
+    pdf.text(`Temperature: ${data.temperature}`, 10, 80);
+    pdf.save('Crop_Detection_Report.pdf');
+  };
+});
+</script>
+
 </body>
 </html>

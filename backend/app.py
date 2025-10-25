@@ -60,13 +60,28 @@ def detection():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
 
-            # Placeholder for AI detection logic
-            result = "Example: Detected 'Healthy Crop'"
+            # --- Replace this with your ML model logic later ---
+            # For now, return mock data for frontend display
+            result = {
+                "disease": "Leaf Blight",
+                "causes": "Fungal infection due to excessive humidity.",
+                "prevention": "Use resistant varieties and ensure good air circulation.",
+                "treatment": "Apply Mancozeb fungicide and remove infected leaves.",
+                "soil": "Loamy soil with good drainage.",
+                "water": "Moderate irrigation; avoid waterlogging.",
+                "temperature": "25–30°C ideal for healthy growth.",
+                "soil_score": 80,
+                "water_score": 65,
+                "temp_score": 90
+            }
 
-            return jsonify({'result': result, 'filename': filename})
+            return jsonify(result)
         else:
             return jsonify({'error': 'Invalid file format!'})
+    
+    # Render the upload form when page is opened normally
     return render_template('detection.html')
+
 
 
 # 📍 Map Page
