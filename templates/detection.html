@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropDetect — Detection</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #e8ffe8, #c6f7c3, #ffffff);
+    }
+
+    /* HEADER */
+    .header {
+      width: 100%;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1e5631;
+      color: white;
+      box-sizing: border-box;
+    }
+
+    .left-menu a,
+    .right-menu a {
+      margin: 0 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .left-menu a:hover,
+    .right-menu a:hover {
+      text-decoration: underline;
+    }
+
+    /* MIDDLE START DETECTION */
+    .center-box {
+      margin-top: 70px;
+      text-align: center;
+    }
+
+    .start-btn {
+      padding: 14px 32px;
+      background: #1e5631;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .start-btn:hover {
+      background: #2e7d32;
+    }
+
+    /* UPLOAD SECTION */
+    .upload-box {
+      background: #f7fff3;
+      border: 2px dashed #4CAF50;
+      padding: 30px;
+      text-align: center;
+      border-radius: 10px;
+      margin: 40px auto;
+      width: 60%;
+      display: none;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    /* DETECTION RESULT */
+    #detectionResult {
+      display: none;
+      width: 80%;
+      margin: auto;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background: #1e5631;
+      color: white;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background: #2e7d32;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER BAR -->
+  <header class="header">
+    <div class="left-menu">
+      <a href="/login">⬅ Back</a>
+      <a href="/logout">Logout</a>
+    </div>
+
+    <div class="right-menu">
+      <a href="/admin">Admin</a>
+      <a href="{{ url_for('diseases_info') }}">Diseases Info</a>
+      <a href="{{ url_for('map_page') }}">Map</a>
+
+    </div>
+  </header>
+
+  <!-- MAIN SECTION -->
+  <div class="center-box">
+    <h2>Start your crop disease detection</h2>
+    <button class="start-btn" onclick="showUpload()">Start Detection</button>
+  </div>
+
+  <!-- UPLOAD BOX -->
+  <div class="upload-box" id="uploadSection">
+    <h3>Upload Leaf Image</h3>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <input type="file" id="fileInput" name="file" accept="image/*" required />
+      <br><br>
+      <button type="submit" class="btn">Detect Disease</button>
+    </form>
+    <div id="result"></div>
+  </div>
+
+  <!-- DETECTION RESULT SECTION -->
+  <div id="detectionResult">
+    <h3>🧾 Detection Report</h3>
+    <div id="diseaseDetails"></div>
+    <canvas id="analysisChart" width="400" height="200"></canvas>
+    <button id="downloadPdf" class="btn">Download Report as PDF</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    function showUpload() {
+      document.getElementById('uploadSection').style.display = 'block';
+    }
+
+    const form = document.getElementById('uploadForm');
+    const resultDiv = document.getElementById('result');
+    const detailsDiv = document.getElementById('diseaseDetails');
+    const detectionResult = document.getElementById('detectionResult');
+    const downloadBtn = document.getElementById('downloadPdf');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      resultDiv.innerText = "Detecting... please wait ⏳";
+
+      const res = await fetch('/detection', { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (data.error) {
+        resultDiv.innerText = data.error;
+        return;
+      }
+
+      resultDiv.innerText = "";
+      detectionResult.style.display = 'block';
+
+      detailsDiv.innerHTML = `
+        <h4>${data.disease}</h4>
+        <p><b>Causes:</b> ${data.causes}</p>
+        <p><b>Prevention:</b> ${data.prevention}</p>
+        <p><b>Treatment:</b> ${data.treatment}</p>
+        <p><b>Soil Type:</b> ${data.soil}</p>
+        <p><b>Water Requirement:</b> ${data.water}</p>
+        <p><b>Temperature:</b> ${data.temperature}</p>
+      `;
+
+      const ctx = document.getElementById('analysisChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Soil', 'Water', 'Temperature'],
+          datasets: [{
+            label: 'Crop Health Analysis',
+            data: [data.soil_score, data.water_score, data.temp_score],
+            backgroundColor: ['#81c784', '#4db6ac', '#64b5f6']
+          }]
+        },
+        options: { scales: { y: { beginAtZero: true, max: 100 } } }
+      });
+
+      downloadBtn.onclick = () => {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+        pdf.text(`Crop Disease Detection Report`, 10, 10);
+        pdf.text(`Disease: ${data.disease}`, 10, 20);
+        pdf.text(`Causes: ${data.causes}`, 10, 30);
+        pdf.text(`Prevention: ${data.prevention}`, 10, 40);
+        pdf.text(`Treatment: ${data.treatment}`, 10, 50);
+        pdf.text(`Soil: ${data.soil}`, 10, 60);
+        pdf.text(`Water: ${data.water}`, 10, 70);
+        pdf.text(`Temperature: ${data.temperature}`, 10, 80);
+        pdf.save('Crop_Detection_Report.pdf');
+      };
+    });
+  </script>
+
+</body>
+</html>

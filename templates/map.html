@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropDetect — Disease Spread Map</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Marker Cluster CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+  <!-- Heatmap Plugin -->
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Header / Navbar */
+    .header {
+      background: #1e5631;
+      padding: 14px 25px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header nav a {
+      margin-left: 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .header nav a:hover {
+      text-decoration: underline;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 15px 0;
+      color: #2c3e50;
+    }
+
+    #map {
+      height: 85vh;
+      width: 90%;
+      margin: 0 auto 30px auto;
+      border-radius: 12px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Season Filter Dropdown */
+    .filter-box {
+      width: 200px;
+      margin: 10px auto;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <div>
+    <a href="{{ url_for('detection') }}" style="color:white;">⬅ Back</a>
+
+    {% if session.get('user') %}
+      <a href="{{ url_for('logout') }}" style="margin-left:15px; color:white;">Logout</a>
+    {% endif %}
+  </div>
+
+  <nav>
+    <a href="{{ url_for('detection') }}">Detection</a>
+    <a href="{{ url_for('diseases_info') }}">Diseases Info</a>
+    <a href="{{ url_for('map_page') }}">Map</a>
+    {% if session.get('user') %}
+    <a href="{{ url_for('admin') }}">Admin</a>
+    {% endif %}
+  </nav>
+</header>
+
+<h2>🌾 Crop Disease Spread & Hotspot Analysis</h2>
+
+<div class="filter-box">
+  <label><b>Filter by Season:</b></label>
+  <select id="seasonFilter">
+    <option value="All">All Seasons</option>
+    <option value="Summer">Summer</option>
+    <option value="Monsoon">Monsoon</option>
+    <option value="Winter">Winter</option>
+  </select>
+</div>
+
+<div id="map"></div>
+
+<!-- Libraries -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/papaparse@5.3.0/papaparse.min.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+<script>
+  var map = L.map('map').setView([22.97, 78.65], 5);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18
+  }).addTo(map);
+
+  var clusterGroup = L.markerClusterGroup();
+  var heatPoints = [];
+
+  function getColor(sev) {
+    if (sev === "High") return "red";
+    if (sev === "Moderate") return "orange";
+    return "green";
+  }
+
+  function loadData(season = "All") {
+    clusterGroup.clearLayers();
+    heatPoints = [];
+
+    Papa.parse("/static/crop_disease_geo_dataset.csv", {
+      download: true,
+      header: true,
+      complete: function(res) {
+
+        res.data.forEach(row => {
+          if (!row.Latitude || !row.Longitude) return;
+
+          if (season !== "All" && row.Season !== season) return;
+
+          var lat = parseFloat(row.Latitude);
+          var lon = parseFloat(row.Longitude);
+          var color = getColor(row.Severity);
+
+          var marker = L.circleMarker([lat, lon], {
+            radius: 7,
+            fillColor: color,
+            color: "#000",
+            weight: 1,
+            fillOpacity: 0.9
+          });
+
+          marker.bindPopup(`
+            <b>${row.Crop}</b><br>
+            Disease: ${row.Disease}<br>
+            Severity: <b style="color:${color}">${row.Severity}</b><br>
+            State: ${row.State}<br>
+            Season: ${row.Season}<br>
+            Date: ${row.Detected_Date}
+          `);
+
+          clusterGroup.addLayer(marker);
+
+          // Heatmap intensity based on severity
+          var intensity = row.Severity === "High" ? 0.9 :
+                          row.Severity === "Moderate" ? 0.6 : 0.3;
+
+          heatPoints.push([lat, lon, intensity]);
+        });
+
+        map.addLayer(clusterGroup);
+
+        L.heatLayer(heatPoints, { radius: 30 }).addTo(map);
+      }
+    });
+  }
+
+  loadData();
+
+  document.getElementById("seasonFilter").addEventListener("change", function() {
+    loadData(this.value);
+  });
+</script>
+
+</body>
+</html>

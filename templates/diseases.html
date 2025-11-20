@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropDetect — Diseases Info</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    body {
+      background: #f8fff8;
+    }
+
+    .disease-card {
+      background: #f1fff0;
+      border-left: 5px solid hwb(140 10% 67%);
+      padding: 15px;
+      margin: 20px auto;
+      border-radius: 8px;
+      width: 80%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      background: hwb(140 10% 67%);
+      color: white;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ---------- HEADER ---------- -->
+  <header class="header">
+    <h2>🌿 CropDetect — Diseases Information</h2>
+
+    <nav>
+      <a href="{{ url_for('detection') }}">Detection</a>
+      <a href="{{ url_for('diseases_info') }}">Diseases Info</a>
+      <a href="{{ url_for('map_page') }}">Map</a>
+
+      {% if session.get('user') %}
+      <a href="{{ url_for('admin') }}">Admin</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <!-- ---------- DISEASE INFORMATION ---------- -->
+  <section>
+    <div class="disease-card">
+      <h3>1. Leaf Blight</h3>
+      <p>
+        Caused by fungal spores that attack leaves, leading to dark brown or black lesions.
+        Prevent using crop rotation, proper spacing, and recommended fungicides.
+      </p>
+    </div>
+
+    <div class="disease-card">
+      <h3>2. Powdery Mildew</h3>
+      <p>
+        Identified by white powdery patches on leaf surfaces. Thrives in warm, dry climates.
+        Improve plant spacing and ventilation to prevent infection.
+      </p>
+    </div>
+
+    <div class="disease-card">
+      <h3>3. Rust</h3>
+      <p>
+        Causes orange or brown powdery pustules on leaves. Common in humid and warm areas.
+        Use resistant varieties and avoid overhead irrigation.
+      </p>
+    </div>
+  </section>
+
+</body>
+
+</html>

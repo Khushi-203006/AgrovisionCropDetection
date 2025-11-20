@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CropDetect | Home</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #e8ffe8, #c6f7c3, #ffffff);
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      width: 100%;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1e5631;
+    }
+
+    .lang-select {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 16px;
+      border: 1px solid #1e5631;
+      cursor: pointer;
+      background: #ffffff;
+    }
+
+    /* Main Container */
+    .main-section {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .title {
+      font-size: 42px;
+      color: #1e5631;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-size: 22px;
+      margin-top: 10px;
+      color: #2e7d32;
+    }
+
+    /* Dropdown Options */
+    .options {
+      margin-top: 40px;
+      width: 260px;
+    }
+
+    details {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin: 10px 0;
+      cursor: pointer;
+      border: 1px solid #1e5631;
+    }
+
+    summary {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e5631;
+    }
+
+    .link-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 14px;
+      background: #1e5631;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .link-btn:hover {
+      background: #2e7d32;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="logo">🌿 CropDetect</div>
+
+    <select class="lang-select" onchange="changeLang(this.value)">
+      <option value="en" {% if lang == 'en' %}selected{% endif %}>English</option>
+      <option value="hi" {% if lang == 'hi' %}selected{% endif %}>हिंदी</option>
+    </select>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-section">
+    <div class="title">AgroVision</div>
+    <div class="subtitle">{% if lang=='hi' %}क्रॉप डिटेक्ट में आपका स्वागत है{% else %}Welcome to CropDetect{% endif %}</div>
+
+    <div class="options">
+
+      <!-- Login / Signup -->
+      <details>
+        <summary>{% if lang=='hi' %}लॉगिन / साइन अप{% else %}Login / Sign Up{% endif %}</summary>
+        <a href="/login" class="link-btn">Open</a>
+      </details>
+
+      <!-- How It Works -->
+      <details>
+        <summary>{% if lang=='hi' %}यह कैसे काम करता है?{% else %}How it Works{% endif %}</summary>
+        <p style="font-size:14px; color:#2e7d32; margin-top:10px;">
+          {% if lang=='hi' %}
+          पत्ता अपलोड करें → AI बीमारी पहचानता है → आपको परिणाम तुरंत मिलता है।
+          {% else %}
+          Upload a leaf → AI detects disease → You instantly get the result.
+          {% endif %}
+        </p>
+      </details>
+
+    </div>
+  </div>
+
+  <script>
+    function changeLang(lang) {
+      window.location.href = "/set_language/" + lang;
+    }
+  </script>
+
+</body>
+</html>

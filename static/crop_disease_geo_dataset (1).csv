@@ -1,0 +1,51 @@
+State,Crop,Disease,Latitude,Longitude,Severity,Detected_Date
+Maharashtra,Soybean,Mosaic Virus,23.4329,68.5559,Moderate,2025-11-03
+Kerala,Soybean,Leaf Curl,18.895,87.7843,High,2025-04-26
+Rajasthan,Cotton,Powdery Mildew,12.6334,78.5562,Moderate,2025-02-11
+Karnataka,Cotton,Wilt,15.4414,75.7234,Low,2025-04-09
+Punjab,Cotton,Downy Mildew,25.5503,69.8485,High,2025-04-20
+Odisha,Soybean,Powdery Mildew,15.9233,70.5568,Low,2025-05-04
+Andhra Pradesh,Potato,Wilt,25.4209,70.2054,Moderate,2025-11-19
+Rajasthan,Potato,Downy Mildew,13.5534,72.8674,Moderate,2025-09-07
+Madhya Pradesh,Tomato,Bacterial Spot,21.0051,71.0969,Low,2025-03-11
+Gujarat,Potato,Late Blight,26.3673,68.5577,Moderate,2025-05-06
+Maharashtra,Wheat,Leaf Blight,21.9861,83.8694,Low,2025-02-07
+West Bengal,Tomato,Anthracnose,19.1777,81.9856,High,2025-10-03
+Haryana,Potato,Anthracnose,30.7522,69.4899,Moderate,2025-12-01
+Karnataka,Soybean,Late Blight,8.0463,78.2329,Moderate,2025-06-22
+Haryana,Wheat,Mosaic Virus,17.7439,77.9969,Moderate,2025-10-21
+West Bengal,Tomato,Wilt,27.2148,82.0885,Low,2025-12-11
+Haryana,Maize,Bacterial Spot,11.6176,72.6107,Low,2025-04-15
+Uttar Pradesh,Tomato,Bacterial Spot,24.0363,87.9154,Low,2025-09-23
+Bihar,Sugarcane,Powdery Mildew,9.5909,76.7507,Moderate,2025-04-16
+Punjab,Rice,Downy Mildew,16.9502,85.0991,High,2025-06-05
+Karnataka,Soybean,Downy Mildew,13.6093,86.3979,High,2025-10-24
+Tamil Nadu,Tomato,Bacterial Spot,15.6085,70.5195,Moderate,2025-02-15
+Bihar,Tomato,Bacterial Spot,13.9378,72.6071,Moderate,2025-05-19
+Andhra Pradesh,Cotton,Leaf Curl,11.4788,78.543,High,2025-01-09
+Rajasthan,Wheat,Mosaic Virus,28.6225,72.2828,Moderate,2025-06-11
+Haryana,Tomato,Rust,27.247,74.0181,High,2025-08-10
+Haryana,Rice,Leaf Curl,8.0951,83.8364,Moderate,2025-02-08
+Bihar,Cotton,Leaf Curl,16.3868,72.7016,Moderate,2025-06-05
+Assam,Potato,Bacterial Spot,17.0081,85.5052,Low,2025-05-17
+Madhya Pradesh,Soybean,Leaf Blight,19.2843,69.9104,Moderate,2025-11-10
+Haryana,Sugarcane,Leaf Curl,23.1766,85.6508,Moderate,2025-01-16
+Uttar Pradesh,Tomato,Leaf Curl,18.1566,83.3607,Low,2025-09-03
+Odisha,Potato,Downy Mildew,16.8578,70.7224,Moderate,2025-08-10
+Assam,Cotton,Leaf Blight,13.4219,86.9058,High,2025-02-14
+West Bengal,Wheat,Wilt,9.4491,71.7227,High,2025-01-13
+Uttar Pradesh,Rice,Mosaic Virus,17.1376,75.7918,Moderate,2025-09-08
+Rajasthan,Cotton,Rust,19.4153,75.2102,Low,2025-09-26
+Uttar Pradesh,Cotton,Bacterial Spot,28.7366,73.6086,Low,2025-05-17
+Tamil Nadu,Maize,Bacterial Spot,31.1575,85.994,Moderate,2025-06-20
+Uttar Pradesh,Soybean,Mosaic Virus,9.7686,87.4153,Moderate,2025-08-13
+Odisha,Wheat,Bacterial Spot,31.3492,77.6516,Moderate,2025-08-02
+Punjab,Maize,Anthracnose,22.7585,77.6062,Moderate,2025-01-09
+Punjab,Potato,Downy Mildew,24.9988,85.2259,High,2025-03-16
+West Bengal,Sugarcane,Anthracnose,29.3489,82.9896,High,2025-08-01
+Andhra Pradesh,Sugarcane,Rust,8.2849,85.7183,Low,2025-01-27
+Assam,Rice,Wilt,12.4656,83.7283,Moderate,2025-11-07
+Rajasthan,Cotton,Rust,14.3016,78.875,Low,2025-05-06
+Gujarat,Rice,Mosaic Virus,30.424,78.9773,High,2025-11-09
+Tamil Nadu,Sugarcane,Mosaic Virus,21.8522,73.5602,High,2025-08-16
+Punjab,Soybean,Leaf Blight,30.3853,73.7516,Moderate,2025-07-12

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Sign Up</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #e8ffe8, #c6f7c3, #ffffff);
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 350px;
+      background: #ffffff;
+      padding: 20px 25px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      border: 1px solid #1e5631;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #1e5631;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #1e5631;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    .btn {
+      width: 95%;
+      padding: 10px;
+      background: #1e5631;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: #2e7d32;
+    }
+
+    .toggle-text {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #1e5631;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 15px;
+      color: #1e5631;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container" id="formBox">
+
+    <!-- Default Login Form -->
+    <h2 id="formTitle">Login</h2>
+
+    <form method="post" action="/login">
+      <input name="email" type="email" placeholder="Email" required />
+      <input name="password" type="password" placeholder="Password" required />
+      <button class="btn" type="submit">Login</button>
+    </form>
+
+    <p class="toggle-text" onclick="switchToSignup()">Don't have an account? Sign Up</p>
+
+    <a href="/" class="back-btn">← Back to Home</a>
+  </div>
+
+  <script>
+    function switchToSignup() {
+      document.getElementById("formBox").innerHTML = `
+        <h2>Sign Up</h2>
+
+        <form method="post" action="/signup">
+          <input name="fullname" type="text" placeholder="Full Name" required />
+          <input name="email" type="email" placeholder="Email" required />
+          <input name="password" type="password" placeholder="Create Password" required />
+          <button class="btn" type="submit">Sign Up</button>
+        </form>
+
+        <p class="toggle-text" onclick="switchToLogin()">Already have an account? Login</p>
+        <a href="/" class="back-btn">← Back to Home</a>
+      `;
+    }
+
+    function switchToLogin() {
+      document.getElementById("formBox").innerHTML = `
+        <h2>Login</h2>
+
+        <form method="post" action="/login">
+          <input name="email" type="email" placeholder="Email" required />
+          <input name="password" type="password" placeholder="Password" required />
+          <button class="btn" type="submit">Login</button>
+        </form>
+
+        <p class="toggle-text" onclick="switchToSignup()">Don't have an account? Sign Up</p>
+        <a href="/" class="back-btn">← Back to Home</a>
+      `;
+    }
+  </script>
+
+</body>
+</html>
